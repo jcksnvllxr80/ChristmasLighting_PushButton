@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=MoodLighting_PushButton.X
+PROJECTNAME=ChristmasLighting_PushButton.X
 
 # Active Configuration
 DEFAULTCONF=default

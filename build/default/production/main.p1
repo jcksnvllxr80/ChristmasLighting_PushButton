@@ -2,15 +2,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "70 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"65 main.c
+"48 mcc_generated_files/interrupt_manager.h
+[v _color `uc ~T0 @X0 0 e ]
+"68 main.c
 [c E11034 60 61 62 63 .. ]
 [n E11034 . channel_VSS channel_Temp channel_DAC1 channel_FVR_buf1  ]
 "251 mcc_generated_files/adcc.h
 [v _ADCC_GetSingleConversion `(ui ~T0 @X0 0 ef1`E11034 ]
 "25953 C:\Program Files (x86)\Microchip\xc8\v1.42\include\pic18f26k40.h
 [v _ADPCH0 `Vb ~T0 @X0 0 e@31480 ]
-"48 mcc_generated_files/interrupt_manager.h
-[v _color `uc ~T0 @X0 0 e ]
 "19 main.c
 [v _off `(v ~T0 @X0 0 ef ]
 "12
@@ -35,8 +35,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _oneBitOn `(v ~T0 @X0 0 ef ]
 "21
 [v _oneBitOff `(v ~T0 @X0 0 ef ]
-"22
+"24
 [v _allBitsOff `(v ~T0 @X0 0 ef ]
+"22
+[v _lastBitOn `(v ~T0 @X0 0 ef ]
+"23
+[v _lastBitOff `(v ~T0 @X0 0 ef ]
 "15911 C:\Program Files (x86)\Microchip\xc8\v1.42\include\pic18f26k40.h
 [s S771 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S771 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
@@ -10334,144 +10338,149 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 19: void off(void);
 [; ;main.c: 20: void oneBitOn(void);
 [; ;main.c: 21: void oneBitOff(void);
-[; ;main.c: 22: void allBitsOff(void);
-[; ;main.c: 23: void brightness(unsigned char grn, unsigned char red, unsigned char blu, unsigned char value );
+[; ;main.c: 22: void lastBitOn(void);
+[; ;main.c: 23: void lastBitOff(void);
+[; ;main.c: 24: void allBitsOff(void);
+[; ;main.c: 25: void brightness(unsigned char grn, unsigned char red, unsigned char blu, unsigned char value );
 [v $root$_main `(v ~T0 @X0 0 e ]
-"27 main.c
+"29 main.c
 [v _main `(v ~T0 @X0 1 ef ]
-"28
+"30
 {
-[; ;main.c: 27: void main(void)
-[; ;main.c: 28: {
+[; ;main.c: 29: void main(void)
+[; ;main.c: 30: {
 [e :U _main ]
 [f ]
-[; ;main.c: 30: SYSTEM_Initialize();
-"30
+[; ;main.c: 32: SYSTEM_Initialize();
+"32
 [e ( _SYSTEM_Initialize ..  ]
-"59
-[v _ADC_value `ui ~T0 @X0 1 a ]
-[; ;main.c: 59: unsigned int ADC_value = 0;
-[e = _ADC_value -> -> 0 `i `ui ]
-"60
-[v _value `uc ~T0 @X0 1 a ]
-[; ;main.c: 60: unsigned char value = 0;
-[e = _value -> -> 0 `i `uc ]
 "61
-[v _lastValue `uc ~T0 @X0 1 a ]
-[; ;main.c: 61: unsigned char lastValue = 0;
-[e = _lastValue -> -> 0 `i `uc ]
-[; ;main.c: 63: while (1)
+[v _ADC_value `ui ~T0 @X0 1 a ]
+[; ;main.c: 61: unsigned int ADC_value = 0;
+[e = _ADC_value -> -> 0 `i `ui ]
+"62
+[v _value `uc ~T0 @X0 1 a ]
+[; ;main.c: 62: unsigned char value = 0;
+[e = _value -> -> 0 `i `uc ]
 "63
-[e :U 1322 ]
-[; ;main.c: 64: {
-"64
-{
-[; ;main.c: 65: ADC_value = ADCC_GetSingleConversion(ADPCH0);
+[v _lastValue `uc ~T0 @X0 1 a ]
+[; ;main.c: 63: unsigned char lastValue = 0;
+[e = _lastValue -> -> 0 `i `uc ]
+[; ;main.c: 65: color = 0;
 "65
-[e = _ADC_value ( _ADCC_GetSingleConversion (1 -> -> _ADPCH0 `i `E11034 ]
-[; ;main.c: 66: value = ( ADC_value >> 2 );
+[e = _color -> -> 0 `i `uc ]
+[; ;main.c: 66: while (1)
 "66
-[e = _value -> >> _ADC_value -> 2 `i `uc ]
-[; ;main.c: 68: for( unsigned char j = 0; j < 60; j++ ){
+[e :U 1322 ]
+[; ;main.c: 67: {
+"67
+{
+[; ;main.c: 68: ADC_value = ADCC_GetSingleConversion(ADPCH0);
 "68
+[e = _ADC_value ( _ADCC_GetSingleConversion (1 -> -> _ADPCH0 `i `E11034 ]
+[; ;main.c: 69: value = ( ADC_value >> 2 );
+"69
+[e = _value -> >> _ADC_value -> 2 `i `uc ]
+[; ;main.c: 71: for( unsigned char j = 0; j < 25; j++ ){
+"71
 {
 [v _j `uc ~T0 @X0 1 a ]
 [e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 60 `i 1324  ]
+[e $ < -> _j `i -> 25 `i 1324  ]
 [e $U 1325  ]
 [e :U 1324 ]
 {
-[; ;main.c: 69: if (color < 1){
-"69
+[; ;main.c: 72: if (color < 1){
+"72
 [e $ ! < -> _color `i -> 1 `i 1327  ]
 {
-[; ;main.c: 70: off();
-"70
-[e ( _off ..  ]
-"71
-}
-[; ;main.c: 71: }
-[e $U 1328  ]
-"72
-[e :U 1327 ]
-[; ;main.c: 72: else if (color < 2){
-[e $ ! < -> _color `i -> 2 `i 1329  ]
-{
-[; ;main.c: 73: blue(value);
+[; ;main.c: 73: off();
 "73
-[e ( _blue (1 _value ]
+[e ( _off ..  ]
 "74
 }
 [; ;main.c: 74: }
-[e $U 1330  ]
+[e $U 1328  ]
 "75
-[e :U 1329 ]
-[; ;main.c: 75: else if (color < 3){
-[e $ ! < -> _color `i -> 3 `i 1331  ]
+[e :U 1327 ]
+[; ;main.c: 75: else if (color < 2){
+[e $ ! < -> _color `i -> 2 `i 1329  ]
 {
-[; ;main.c: 76: red(value);
+[; ;main.c: 76: blue(value);
 "76
-[e ( _red (1 _value ]
+[e ( _blue (1 _value ]
 "77
 }
 [; ;main.c: 77: }
-[e $U 1332  ]
+[e $U 1330  ]
 "78
-[e :U 1331 ]
-[; ;main.c: 78: else if (color < 4){
-[e $ ! < -> _color `i -> 4 `i 1333  ]
+[e :U 1329 ]
+[; ;main.c: 78: else if (color < 3){
+[e $ ! < -> _color `i -> 3 `i 1331  ]
 {
-[; ;main.c: 79: magenta(value);
+[; ;main.c: 79: red(value);
 "79
-[e ( _magenta (1 _value ]
+[e ( _red (1 _value ]
 "80
 }
 [; ;main.c: 80: }
-[e $U 1334  ]
+[e $U 1332  ]
 "81
-[e :U 1333 ]
-[; ;main.c: 81: else if (color < 5){
-[e $ ! < -> _color `i -> 5 `i 1335  ]
+[e :U 1331 ]
+[; ;main.c: 81: else if (color < 4){
+[e $ ! < -> _color `i -> 4 `i 1333  ]
 {
-[; ;main.c: 82: green(value);
+[; ;main.c: 82: magenta(value);
 "82
-[e ( _green (1 _value ]
+[e ( _magenta (1 _value ]
 "83
 }
 [; ;main.c: 83: }
-[e $U 1336  ]
+[e $U 1334  ]
 "84
-[e :U 1335 ]
-[; ;main.c: 84: else if (color < 6){
-[e $ ! < -> _color `i -> 6 `i 1337  ]
+[e :U 1333 ]
+[; ;main.c: 84: else if (color < 5){
+[e $ ! < -> _color `i -> 5 `i 1335  ]
 {
-[; ;main.c: 85: cyan(value);
+[; ;main.c: 85: green(value);
 "85
-[e ( _cyan (1 _value ]
+[e ( _green (1 _value ]
 "86
 }
 [; ;main.c: 86: }
-[e $U 1338  ]
+[e $U 1336  ]
 "87
-[e :U 1337 ]
-[; ;main.c: 87: else if (color < 7){
-[e $ ! < -> _color `i -> 7 `i 1339  ]
+[e :U 1335 ]
+[; ;main.c: 87: else if (color < 6){
+[e $ ! < -> _color `i -> 6 `i 1337  ]
 {
-[; ;main.c: 88: yellow(value);
+[; ;main.c: 88: cyan(value);
 "88
-[e ( _yellow (1 _value ]
+[e ( _cyan (1 _value ]
 "89
 }
 [; ;main.c: 89: }
-[e $U 1340  ]
+[e $U 1338  ]
 "90
-[e :U 1339 ]
-[; ;main.c: 90: else{
+[e :U 1337 ]
+[; ;main.c: 90: else if (color < 7){
+[e $ ! < -> _color `i -> 7 `i 1339  ]
 {
-[; ;main.c: 91: white(value);
+[; ;main.c: 91: yellow(value);
 "91
-[e ( _white (1 _value ]
+[e ( _yellow (1 _value ]
 "92
+}
+[; ;main.c: 92: }
+[e $U 1340  ]
+"93
+[e :U 1339 ]
+[; ;main.c: 93: else{
+{
+[; ;main.c: 94: white(value);
+"94
+[e ( _white (1 _value ]
+"95
 }
 [e :U 1340 ]
 [e :U 1338 ]
@@ -10480,853 +10489,1043 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1332 ]
 [e :U 1330 ]
 [e :U 1328 ]
-"93
-}
-"68
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 60 `i 1324  ]
-[e :U 1325 ]
-"93
-}
-[; ;main.c: 92: }
-[; ;main.c: 93: }
-[; ;main.c: 95: _delay((unsigned long)((250)*(64000000/4000.0)));
-"95
-[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 64000000 `l `d .4000.0 `ul ]
 "96
 }
+"71
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 25 `i 1324  ]
+[e :U 1325 ]
+"96
+}
+[; ;main.c: 95: }
+[; ;main.c: 96: }
+[; ;main.c: 98: _delay((unsigned long)((10)*(64000000/4000000.0)));
+"98
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 64000000 `l `d .4000000.0 `ul ]
+"99
+}
 [e :U 1321 ]
-"63
+"66
 [e $U 1322  ]
 [e :U 1323 ]
-[; ;main.c: 96: }
-[; ;main.c: 97: }
-"97
+[; ;main.c: 99: }
+[; ;main.c: 100: }
+"100
 [e :UE 1320 ]
 }
-"99
+"102
 [v _brightness `(v ~T0 @X0 1 ef4`uc`uc`uc`uc ]
 {
-[; ;main.c: 99: void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsigned char value ){
+[; ;main.c: 102: void brightness( unsigned char red, unsigned char grn, unsigned char blu, unsigned char value ){
 [e :U _brightness ]
-[v _grn `uc ~T0 @X0 1 r1 ]
-[v _red `uc ~T0 @X0 1 r2 ]
+[v _red `uc ~T0 @X0 1 r1 ]
+[v _grn `uc ~T0 @X0 1 r2 ]
 [v _blu `uc ~T0 @X0 1 r3 ]
 [v _value `uc ~T0 @X0 1 r4 ]
 [f ]
-"100
-[v _bit7 `uc ~T0 @X0 1 a ]
-[; ;main.c: 100: unsigned char bit7 = value & 128;
-[e = _bit7 -> & -> _value `i -> 128 `i `uc ]
-"101
-[v _bit6 `uc ~T0 @X0 1 a ]
-[; ;main.c: 101: unsigned char bit6 = value & 64;
-[e = _bit6 -> & -> _value `i -> 64 `i `uc ]
-"102
-[v _bit5 `uc ~T0 @X0 1 a ]
-[; ;main.c: 102: unsigned char bit5 = value & 32;
-[e = _bit5 -> & -> _value `i -> 32 `i `uc ]
 "103
-[v _bit4 `uc ~T0 @X0 1 a ]
-[; ;main.c: 103: unsigned char bit4 = value & 16;
-[e = _bit4 -> & -> _value `i -> 16 `i `uc ]
+[v _bit7 `uc ~T0 @X0 1 a ]
+[; ;main.c: 103: unsigned char bit7 = 0;
+[e = _bit7 -> -> 0 `i `uc ]
 "104
-[v _bit3 `uc ~T0 @X0 1 a ]
-[; ;main.c: 104: unsigned char bit3 = value & 8;
-[e = _bit3 -> & -> _value `i -> 8 `i `uc ]
+[v _bit6 `uc ~T0 @X0 1 a ]
+[; ;main.c: 104: unsigned char bit6 = 1;
+[e = _bit6 -> -> 1 `i `uc ]
 "105
-[v _bit2 `uc ~T0 @X0 1 a ]
-[; ;main.c: 105: unsigned char bit2 = value & 4;
-[e = _bit2 -> & -> _value `i -> 4 `i `uc ]
+[v _bit5 `uc ~T0 @X0 1 a ]
+[; ;main.c: 105: unsigned char bit5 = 1;
+[e = _bit5 -> -> 1 `i `uc ]
 "106
-[v _bit1 `uc ~T0 @X0 1 a ]
-[; ;main.c: 106: unsigned char bit1 = value & 2;
-[e = _bit1 -> & -> _value `i -> 2 `i `uc ]
+[v _bit4 `uc ~T0 @X0 1 a ]
+[; ;main.c: 106: unsigned char bit4 = 1;
+[e = _bit4 -> -> 1 `i `uc ]
 "107
-[v _bit0 `uc ~T0 @X0 1 a ]
-[; ;main.c: 107: unsigned char bit0 = value & 1;
-[e = _bit0 -> & -> _value `i -> 1 `i `uc ]
-[; ;main.c: 109: if (grn){
+[v _bit3 `uc ~T0 @X0 1 a ]
+[; ;main.c: 107: unsigned char bit3 = 1;
+[e = _bit3 -> -> 1 `i `uc ]
+"108
+[v _bit2 `uc ~T0 @X0 1 a ]
+[; ;main.c: 108: unsigned char bit2 = 1;
+[e = _bit2 -> -> 1 `i `uc ]
 "109
-[e $ ! != -> _grn `i -> -> -> 0 `i `uc `i 1342  ]
-{
-[; ;main.c: 111: if (bit7 == 128){
-"111
-[e $ ! == -> _bit7 `i -> 128 `i 1343  ]
-{
-[; ;main.c: 112: oneBitOn();
+[v _bit1 `uc ~T0 @X0 1 a ]
+[; ;main.c: 109: unsigned char bit1 = 1;
+[e = _bit1 -> -> 1 `i `uc ]
+"110
+[v _bit0 `uc ~T0 @X0 1 a ]
+[; ;main.c: 110: unsigned char bit0 = 1;
+[e = _bit0 -> -> 1 `i `uc ]
+[; ;main.c: 112: if (red){
 "112
-[e ( _oneBitOn ..  ]
-"113
-}
-[; ;main.c: 113: }
-[e $U 1344  ]
-"114
-[e :U 1343 ]
-[; ;main.c: 114: else{
+[e $ ! != -> _red `i -> -> -> 0 `i `uc `i 1342  ]
 {
-[; ;main.c: 115: oneBitOff();
+[; ;main.c: 114: if (bit7 == 1){
+"114
+[e $ ! == -> _bit7 `i -> 1 `i 1343  ]
+{
+[; ;main.c: 115: oneBitOn();
 "115
-[e ( _oneBitOff ..  ]
+[e ( _oneBitOn ..  ]
 "116
 }
-[e :U 1344 ]
 [; ;main.c: 116: }
-[; ;main.c: 119: if (bit6 == 64){
-"119
-[e $ ! == -> _bit6 `i -> 64 `i 1345  ]
+[e $U 1344  ]
+"117
+[e :U 1343 ]
+[; ;main.c: 117: else{
 {
-[; ;main.c: 120: oneBitOn();
-"120
-[e ( _oneBitOn ..  ]
-"121
-}
-[; ;main.c: 121: }
-[e $U 1346  ]
-"122
-[e :U 1345 ]
-[; ;main.c: 122: else{
-{
-[; ;main.c: 123: oneBitOff();
-"123
+[; ;main.c: 118: oneBitOff();
+"118
 [e ( _oneBitOff ..  ]
+"119
+}
+[e :U 1344 ]
+[; ;main.c: 119: }
+[; ;main.c: 122: if (bit6 == 1){
+"122
+[e $ ! == -> _bit6 `i -> 1 `i 1345  ]
+{
+[; ;main.c: 123: oneBitOn();
+"123
+[e ( _oneBitOn ..  ]
 "124
 }
-[e :U 1346 ]
 [; ;main.c: 124: }
-[; ;main.c: 127: if (bit5 == 32){
-"127
-[e $ ! == -> _bit5 `i -> 32 `i 1347  ]
+[e $U 1346  ]
+"125
+[e :U 1345 ]
+[; ;main.c: 125: else{
 {
-[; ;main.c: 128: oneBitOn();
-"128
-[e ( _oneBitOn ..  ]
-"129
-}
-[; ;main.c: 129: }
-[e $U 1348  ]
-"130
-[e :U 1347 ]
-[; ;main.c: 130: else{
-{
-[; ;main.c: 131: oneBitOff();
-"131
+[; ;main.c: 126: oneBitOff();
+"126
 [e ( _oneBitOff ..  ]
+"127
+}
+[e :U 1346 ]
+[; ;main.c: 127: }
+[; ;main.c: 130: if (bit5 == 1){
+"130
+[e $ ! == -> _bit5 `i -> 1 `i 1347  ]
+{
+[; ;main.c: 131: oneBitOn();
+"131
+[e ( _oneBitOn ..  ]
 "132
 }
-[e :U 1348 ]
 [; ;main.c: 132: }
-[; ;main.c: 135: if (bit4 == 16){
-"135
-[e $ ! == -> _bit4 `i -> 16 `i 1349  ]
+[e $U 1348  ]
+"133
+[e :U 1347 ]
+[; ;main.c: 133: else{
 {
-[; ;main.c: 136: oneBitOn();
-"136
-[e ( _oneBitOn ..  ]
-"137
-}
-[; ;main.c: 137: }
-[e $U 1350  ]
-"138
-[e :U 1349 ]
-[; ;main.c: 138: else{
-{
-[; ;main.c: 139: oneBitOff();
-"139
+[; ;main.c: 134: oneBitOff();
+"134
 [e ( _oneBitOff ..  ]
+"135
+}
+[e :U 1348 ]
+[; ;main.c: 135: }
+[; ;main.c: 138: if (bit4 == 1){
+"138
+[e $ ! == -> _bit4 `i -> 1 `i 1349  ]
+{
+[; ;main.c: 139: oneBitOn();
+"139
+[e ( _oneBitOn ..  ]
 "140
 }
-[e :U 1350 ]
 [; ;main.c: 140: }
-[; ;main.c: 143: if (bit3 == 8){
-"143
-[e $ ! == -> _bit3 `i -> 8 `i 1351  ]
+[e $U 1350  ]
+"141
+[e :U 1349 ]
+[; ;main.c: 141: else{
 {
-[; ;main.c: 144: oneBitOn();
-"144
-[e ( _oneBitOn ..  ]
-"145
-}
-[; ;main.c: 145: }
-[e $U 1352  ]
-"146
-[e :U 1351 ]
-[; ;main.c: 146: else{
-{
-[; ;main.c: 147: oneBitOff();
-"147
+[; ;main.c: 142: oneBitOff();
+"142
 [e ( _oneBitOff ..  ]
+"143
+}
+[e :U 1350 ]
+[; ;main.c: 143: }
+[; ;main.c: 146: if (bit3 == 1){
+"146
+[e $ ! == -> _bit3 `i -> 1 `i 1351  ]
+{
+[; ;main.c: 147: oneBitOn();
+"147
+[e ( _oneBitOn ..  ]
 "148
 }
-[e :U 1352 ]
 [; ;main.c: 148: }
-[; ;main.c: 151: if (bit2 == 4){
-"151
-[e $ ! == -> _bit2 `i -> 4 `i 1353  ]
+[e $U 1352  ]
+"149
+[e :U 1351 ]
+[; ;main.c: 149: else{
 {
-[; ;main.c: 152: oneBitOn();
-"152
-[e ( _oneBitOn ..  ]
-"153
-}
-[; ;main.c: 153: }
-[e $U 1354  ]
-"154
-[e :U 1353 ]
-[; ;main.c: 154: else{
-{
-[; ;main.c: 155: oneBitOff();
-"155
+[; ;main.c: 150: oneBitOff();
+"150
 [e ( _oneBitOff ..  ]
+"151
+}
+[e :U 1352 ]
+[; ;main.c: 151: }
+[; ;main.c: 154: if (bit2 == 1){
+"154
+[e $ ! == -> _bit2 `i -> 1 `i 1353  ]
+{
+[; ;main.c: 155: oneBitOn();
+"155
+[e ( _oneBitOn ..  ]
 "156
 }
-[e :U 1354 ]
 [; ;main.c: 156: }
-[; ;main.c: 159: if (bit1 == 2){
-"159
-[e $ ! == -> _bit1 `i -> 2 `i 1355  ]
+[e $U 1354  ]
+"157
+[e :U 1353 ]
+[; ;main.c: 157: else{
 {
-[; ;main.c: 160: oneBitOn();
-"160
-[e ( _oneBitOn ..  ]
-"161
-}
-[; ;main.c: 161: }
-[e $U 1356  ]
-"162
-[e :U 1355 ]
-[; ;main.c: 162: else{
-{
-[; ;main.c: 163: oneBitOff();
-"163
+[; ;main.c: 158: oneBitOff();
+"158
 [e ( _oneBitOff ..  ]
+"159
+}
+[e :U 1354 ]
+[; ;main.c: 159: }
+[; ;main.c: 162: if (bit1 == 1){
+"162
+[e $ ! == -> _bit1 `i -> 1 `i 1355  ]
+{
+[; ;main.c: 163: oneBitOn();
+"163
+[e ( _oneBitOn ..  ]
 "164
 }
-[e :U 1356 ]
 [; ;main.c: 164: }
-[; ;main.c: 167: if (bit0 == 1){
+[e $U 1356  ]
+"165
+[e :U 1355 ]
+[; ;main.c: 165: else{
+{
+[; ;main.c: 166: oneBitOff();
+"166
+[e ( _oneBitOff ..  ]
 "167
+}
+[e :U 1356 ]
+[; ;main.c: 167: }
+[; ;main.c: 170: if (bit0 == 1){
+"170
 [e $ ! == -> _bit0 `i -> 1 `i 1357  ]
 {
-[; ;main.c: 168: oneBitOn();
-"168
-[e ( _oneBitOn ..  ]
-"169
-}
-[; ;main.c: 169: }
-[e $U 1358  ]
-"170
-[e :U 1357 ]
-[; ;main.c: 170: else{
-{
-[; ;main.c: 171: oneBitOff();
+[; ;main.c: 171: oneBitOn();
 "171
-[e ( _oneBitOff ..  ]
+[e ( _oneBitOn ..  ]
 "172
 }
-[e :U 1358 ]
-"174
-}
 [; ;main.c: 172: }
-[; ;main.c: 174: }
-[e $U 1359  ]
-"175
-[e :U 1342 ]
-[; ;main.c: 175: else{
+[e $U 1358  ]
+"173
+[e :U 1357 ]
+[; ;main.c: 173: else{
 {
-[; ;main.c: 177: allBitsOff();
+[; ;main.c: 174: oneBitOff();
+"174
+[e ( _oneBitOff ..  ]
+"175
+}
+[e :U 1358 ]
 "177
-[e ( _allBitsOff ..  ]
+}
+[; ;main.c: 175: }
+[; ;main.c: 177: }
+[e $U 1359  ]
 "178
+[e :U 1342 ]
+[; ;main.c: 178: else{
+{
+[; ;main.c: 180: allBitsOff();
+"180
+[e ( _allBitsOff ..  ]
+"181
 }
 [e :U 1359 ]
-[; ;main.c: 178: }
-[; ;main.c: 181: if (red){
-"181
-[e $ ! != -> _red `i -> -> -> 0 `i `uc `i 1360  ]
-{
-[; ;main.c: 183: if (bit7 == 128){
-"183
-[e $ ! == -> _bit7 `i -> 128 `i 1361  ]
-{
-[; ;main.c: 184: oneBitOn();
+[; ;main.c: 181: }
+[; ;main.c: 184: if (grn){
 "184
-[e ( _oneBitOn ..  ]
-"185
-}
-[; ;main.c: 185: }
-[e $U 1362  ]
-"186
-[e :U 1361 ]
-[; ;main.c: 186: else{
+[e $ ! != -> _grn `i -> -> -> 0 `i `uc `i 1360  ]
 {
-[; ;main.c: 187: oneBitOff();
+[; ;main.c: 186: if (bit7 == 1){
+"186
+[e $ ! == -> _bit7 `i -> 1 `i 1361  ]
+{
+[; ;main.c: 187: oneBitOn();
 "187
-[e ( _oneBitOff ..  ]
+[e ( _oneBitOn ..  ]
 "188
 }
-[e :U 1362 ]
 [; ;main.c: 188: }
-[; ;main.c: 191: if (bit6 == 64){
-"191
-[e $ ! == -> _bit6 `i -> 64 `i 1363  ]
+[e $U 1362  ]
+"189
+[e :U 1361 ]
+[; ;main.c: 189: else{
 {
-[; ;main.c: 192: oneBitOn();
-"192
-[e ( _oneBitOn ..  ]
-"193
-}
-[; ;main.c: 193: }
-[e $U 1364  ]
-"194
-[e :U 1363 ]
-[; ;main.c: 194: else{
-{
-[; ;main.c: 195: oneBitOff();
-"195
+[; ;main.c: 190: oneBitOff();
+"190
 [e ( _oneBitOff ..  ]
+"191
+}
+[e :U 1362 ]
+[; ;main.c: 191: }
+[; ;main.c: 194: if (bit6 == 1){
+"194
+[e $ ! == -> _bit6 `i -> 1 `i 1363  ]
+{
+[; ;main.c: 195: oneBitOn();
+"195
+[e ( _oneBitOn ..  ]
 "196
 }
-[e :U 1364 ]
 [; ;main.c: 196: }
-[; ;main.c: 199: if (bit5 == 32){
-"199
-[e $ ! == -> _bit5 `i -> 32 `i 1365  ]
+[e $U 1364  ]
+"197
+[e :U 1363 ]
+[; ;main.c: 197: else{
 {
-[; ;main.c: 200: oneBitOn();
-"200
-[e ( _oneBitOn ..  ]
-"201
-}
-[; ;main.c: 201: }
-[e $U 1366  ]
-"202
-[e :U 1365 ]
-[; ;main.c: 202: else{
-{
-[; ;main.c: 203: oneBitOff();
-"203
+[; ;main.c: 198: oneBitOff();
+"198
 [e ( _oneBitOff ..  ]
+"199
+}
+[e :U 1364 ]
+[; ;main.c: 199: }
+[; ;main.c: 202: if (bit5 == 1){
+"202
+[e $ ! == -> _bit5 `i -> 1 `i 1365  ]
+{
+[; ;main.c: 203: oneBitOn();
+"203
+[e ( _oneBitOn ..  ]
 "204
 }
-[e :U 1366 ]
 [; ;main.c: 204: }
-[; ;main.c: 207: if (bit4 == 16){
-"207
-[e $ ! == -> _bit4 `i -> 16 `i 1367  ]
+[e $U 1366  ]
+"205
+[e :U 1365 ]
+[; ;main.c: 205: else{
 {
-[; ;main.c: 208: oneBitOn();
-"208
-[e ( _oneBitOn ..  ]
-"209
-}
-[; ;main.c: 209: }
-[e $U 1368  ]
-"210
-[e :U 1367 ]
-[; ;main.c: 210: else{
-{
-[; ;main.c: 211: oneBitOff();
-"211
+[; ;main.c: 206: oneBitOff();
+"206
 [e ( _oneBitOff ..  ]
+"207
+}
+[e :U 1366 ]
+[; ;main.c: 207: }
+[; ;main.c: 210: if (bit4 == 1){
+"210
+[e $ ! == -> _bit4 `i -> 1 `i 1367  ]
+{
+[; ;main.c: 211: oneBitOn();
+"211
+[e ( _oneBitOn ..  ]
 "212
 }
-[e :U 1368 ]
 [; ;main.c: 212: }
-[; ;main.c: 215: if (bit3 == 8){
-"215
-[e $ ! == -> _bit3 `i -> 8 `i 1369  ]
+[e $U 1368  ]
+"213
+[e :U 1367 ]
+[; ;main.c: 213: else{
 {
-[; ;main.c: 216: oneBitOn();
-"216
-[e ( _oneBitOn ..  ]
-"217
-}
-[; ;main.c: 217: }
-[e $U 1370  ]
-"218
-[e :U 1369 ]
-[; ;main.c: 218: else{
-{
-[; ;main.c: 219: oneBitOff();
-"219
+[; ;main.c: 214: oneBitOff();
+"214
 [e ( _oneBitOff ..  ]
+"215
+}
+[e :U 1368 ]
+[; ;main.c: 215: }
+[; ;main.c: 218: if (bit3 == 1){
+"218
+[e $ ! == -> _bit3 `i -> 1 `i 1369  ]
+{
+[; ;main.c: 219: oneBitOn();
+"219
+[e ( _oneBitOn ..  ]
 "220
 }
-[e :U 1370 ]
 [; ;main.c: 220: }
-[; ;main.c: 223: if (bit2 == 4){
-"223
-[e $ ! == -> _bit2 `i -> 4 `i 1371  ]
+[e $U 1370  ]
+"221
+[e :U 1369 ]
+[; ;main.c: 221: else{
 {
-[; ;main.c: 224: oneBitOn();
-"224
-[e ( _oneBitOn ..  ]
-"225
-}
-[; ;main.c: 225: }
-[e $U 1372  ]
-"226
-[e :U 1371 ]
-[; ;main.c: 226: else{
-{
-[; ;main.c: 227: oneBitOff();
-"227
+[; ;main.c: 222: oneBitOff();
+"222
 [e ( _oneBitOff ..  ]
+"223
+}
+[e :U 1370 ]
+[; ;main.c: 223: }
+[; ;main.c: 226: if (bit2 == 1){
+"226
+[e $ ! == -> _bit2 `i -> 1 `i 1371  ]
+{
+[; ;main.c: 227: oneBitOn();
+"227
+[e ( _oneBitOn ..  ]
 "228
 }
-[e :U 1372 ]
 [; ;main.c: 228: }
-[; ;main.c: 231: if (bit1 == 2){
-"231
-[e $ ! == -> _bit1 `i -> 2 `i 1373  ]
+[e $U 1372  ]
+"229
+[e :U 1371 ]
+[; ;main.c: 229: else{
 {
-[; ;main.c: 232: oneBitOn();
-"232
-[e ( _oneBitOn ..  ]
-"233
-}
-[; ;main.c: 233: }
-[e $U 1374  ]
-"234
-[e :U 1373 ]
-[; ;main.c: 234: else{
-{
-[; ;main.c: 235: oneBitOff();
-"235
+[; ;main.c: 230: oneBitOff();
+"230
 [e ( _oneBitOff ..  ]
+"231
+}
+[e :U 1372 ]
+[; ;main.c: 231: }
+[; ;main.c: 234: if (bit1 == 1){
+"234
+[e $ ! == -> _bit1 `i -> 1 `i 1373  ]
+{
+[; ;main.c: 235: oneBitOn();
+"235
+[e ( _oneBitOn ..  ]
 "236
 }
-[e :U 1374 ]
 [; ;main.c: 236: }
-[; ;main.c: 239: if (bit0 == 1){
+[e $U 1374  ]
+"237
+[e :U 1373 ]
+[; ;main.c: 237: else{
+{
+[; ;main.c: 238: oneBitOff();
+"238
+[e ( _oneBitOff ..  ]
 "239
+}
+[e :U 1374 ]
+[; ;main.c: 239: }
+[; ;main.c: 242: if (bit0 == 1){
+"242
 [e $ ! == -> _bit0 `i -> 1 `i 1375  ]
 {
-[; ;main.c: 240: oneBitOn();
-"240
-[e ( _oneBitOn ..  ]
-"241
-}
-[; ;main.c: 241: }
-[e $U 1376  ]
-"242
-[e :U 1375 ]
-[; ;main.c: 242: else{
-{
-[; ;main.c: 243: oneBitOff();
+[; ;main.c: 243: oneBitOn();
 "243
-[e ( _oneBitOff ..  ]
+[e ( _oneBitOn ..  ]
 "244
 }
-[e :U 1376 ]
-"246
-}
 [; ;main.c: 244: }
-[; ;main.c: 246: }
-[e $U 1377  ]
-"247
-[e :U 1360 ]
-[; ;main.c: 247: else{
+[e $U 1376  ]
+"245
+[e :U 1375 ]
+[; ;main.c: 245: else{
 {
-[; ;main.c: 249: allBitsOff();
+[; ;main.c: 246: oneBitOff();
+"246
+[e ( _oneBitOff ..  ]
+"247
+}
+[e :U 1376 ]
 "249
-[e ( _allBitsOff ..  ]
+}
+[; ;main.c: 247: }
+[; ;main.c: 249: }
+[e $U 1377  ]
 "250
+[e :U 1360 ]
+[; ;main.c: 250: else{
+{
+[; ;main.c: 252: allBitsOff();
+"252
+[e ( _allBitsOff ..  ]
+"253
 }
 [e :U 1377 ]
-[; ;main.c: 250: }
-[; ;main.c: 253: if (blu){
-"253
+[; ;main.c: 253: }
+[; ;main.c: 256: if (blu){
+"256
 [e $ ! != -> _blu `i -> -> -> 0 `i `uc `i 1378  ]
 {
-[; ;main.c: 255: if (bit7 == 128){
-"255
-[e $ ! == -> _bit7 `i -> 128 `i 1379  ]
-{
-[; ;main.c: 256: oneBitOn();
-"256
-[e ( _oneBitOn ..  ]
-"257
-}
-[; ;main.c: 257: }
-[e $U 1380  ]
+[; ;main.c: 258: if (bit7 == 1){
 "258
-[e :U 1379 ]
-[; ;main.c: 258: else{
+[e $ ! == -> _bit7 `i -> 1 `i 1379  ]
 {
-[; ;main.c: 259: oneBitOff();
+[; ;main.c: 259: oneBitOn();
 "259
-[e ( _oneBitOff ..  ]
+[e ( _oneBitOn ..  ]
 "260
 }
-[e :U 1380 ]
 [; ;main.c: 260: }
-[; ;main.c: 263: if (bit6 == 64){
-"263
-[e $ ! == -> _bit6 `i -> 64 `i 1381  ]
+[e $U 1380  ]
+"261
+[e :U 1379 ]
+[; ;main.c: 261: else{
 {
-[; ;main.c: 264: oneBitOn();
-"264
-[e ( _oneBitOn ..  ]
-"265
-}
-[; ;main.c: 265: }
-[e $U 1382  ]
-"266
-[e :U 1381 ]
-[; ;main.c: 266: else{
-{
-[; ;main.c: 267: oneBitOff();
-"267
+[; ;main.c: 262: oneBitOff();
+"262
 [e ( _oneBitOff ..  ]
+"263
+}
+[e :U 1380 ]
+[; ;main.c: 263: }
+[; ;main.c: 266: if (bit6 == 1){
+"266
+[e $ ! == -> _bit6 `i -> 1 `i 1381  ]
+{
+[; ;main.c: 267: oneBitOn();
+"267
+[e ( _oneBitOn ..  ]
 "268
 }
-[e :U 1382 ]
 [; ;main.c: 268: }
-[; ;main.c: 271: if (bit5 == 32){
-"271
-[e $ ! == -> _bit5 `i -> 32 `i 1383  ]
+[e $U 1382  ]
+"269
+[e :U 1381 ]
+[; ;main.c: 269: else{
 {
-[; ;main.c: 272: oneBitOn();
-"272
-[e ( _oneBitOn ..  ]
-"273
-}
-[; ;main.c: 273: }
-[e $U 1384  ]
-"274
-[e :U 1383 ]
-[; ;main.c: 274: else{
-{
-[; ;main.c: 275: oneBitOff();
-"275
+[; ;main.c: 270: oneBitOff();
+"270
 [e ( _oneBitOff ..  ]
+"271
+}
+[e :U 1382 ]
+[; ;main.c: 271: }
+[; ;main.c: 274: if (bit5 == 1){
+"274
+[e $ ! == -> _bit5 `i -> 1 `i 1383  ]
+{
+[; ;main.c: 275: oneBitOn();
+"275
+[e ( _oneBitOn ..  ]
 "276
 }
-[e :U 1384 ]
 [; ;main.c: 276: }
-[; ;main.c: 279: if (bit4 == 16){
-"279
-[e $ ! == -> _bit4 `i -> 16 `i 1385  ]
+[e $U 1384  ]
+"277
+[e :U 1383 ]
+[; ;main.c: 277: else{
 {
-[; ;main.c: 280: oneBitOn();
-"280
-[e ( _oneBitOn ..  ]
-"281
-}
-[; ;main.c: 281: }
-[e $U 1386  ]
-"282
-[e :U 1385 ]
-[; ;main.c: 282: else{
-{
-[; ;main.c: 283: oneBitOff();
-"283
+[; ;main.c: 278: oneBitOff();
+"278
 [e ( _oneBitOff ..  ]
+"279
+}
+[e :U 1384 ]
+[; ;main.c: 279: }
+[; ;main.c: 282: if (bit4 == 1){
+"282
+[e $ ! == -> _bit4 `i -> 1 `i 1385  ]
+{
+[; ;main.c: 283: oneBitOn();
+"283
+[e ( _oneBitOn ..  ]
 "284
 }
-[e :U 1386 ]
 [; ;main.c: 284: }
-[; ;main.c: 287: if (bit3 == 8){
-"287
-[e $ ! == -> _bit3 `i -> 8 `i 1387  ]
+[e $U 1386  ]
+"285
+[e :U 1385 ]
+[; ;main.c: 285: else{
 {
-[; ;main.c: 288: oneBitOn();
-"288
-[e ( _oneBitOn ..  ]
-"289
-}
-[; ;main.c: 289: }
-[e $U 1388  ]
-"290
-[e :U 1387 ]
-[; ;main.c: 290: else{
-{
-[; ;main.c: 291: oneBitOff();
-"291
+[; ;main.c: 286: oneBitOff();
+"286
 [e ( _oneBitOff ..  ]
+"287
+}
+[e :U 1386 ]
+[; ;main.c: 287: }
+[; ;main.c: 290: if (bit3 == 1){
+"290
+[e $ ! == -> _bit3 `i -> 1 `i 1387  ]
+{
+[; ;main.c: 291: oneBitOn();
+"291
+[e ( _oneBitOn ..  ]
 "292
 }
-[e :U 1388 ]
 [; ;main.c: 292: }
-[; ;main.c: 295: if (bit2 == 4){
-"295
-[e $ ! == -> _bit2 `i -> 4 `i 1389  ]
+[e $U 1388  ]
+"293
+[e :U 1387 ]
+[; ;main.c: 293: else{
 {
-[; ;main.c: 296: oneBitOn();
-"296
-[e ( _oneBitOn ..  ]
-"297
-}
-[; ;main.c: 297: }
-[e $U 1390  ]
-"298
-[e :U 1389 ]
-[; ;main.c: 298: else{
-{
-[; ;main.c: 299: oneBitOff();
-"299
+[; ;main.c: 294: oneBitOff();
+"294
 [e ( _oneBitOff ..  ]
+"295
+}
+[e :U 1388 ]
+[; ;main.c: 295: }
+[; ;main.c: 298: if (bit2 == 1){
+"298
+[e $ ! == -> _bit2 `i -> 1 `i 1389  ]
+{
+[; ;main.c: 299: oneBitOn();
+"299
+[e ( _oneBitOn ..  ]
 "300
 }
-[e :U 1390 ]
 [; ;main.c: 300: }
-[; ;main.c: 303: if (bit1 == 2){
-"303
-[e $ ! == -> _bit1 `i -> 2 `i 1391  ]
+[e $U 1390  ]
+"301
+[e :U 1389 ]
+[; ;main.c: 301: else{
 {
-[; ;main.c: 304: oneBitOn();
-"304
-[e ( _oneBitOn ..  ]
-"305
-}
-[; ;main.c: 305: }
-[e $U 1392  ]
-"306
-[e :U 1391 ]
-[; ;main.c: 306: else{
-{
-[; ;main.c: 307: oneBitOff();
-"307
+[; ;main.c: 302: oneBitOff();
+"302
 [e ( _oneBitOff ..  ]
+"303
+}
+[e :U 1390 ]
+[; ;main.c: 303: }
+[; ;main.c: 306: if (bit1 == 1){
+"306
+[e $ ! == -> _bit1 `i -> 1 `i 1391  ]
+{
+[; ;main.c: 307: oneBitOn();
+"307
+[e ( _oneBitOn ..  ]
 "308
 }
-[e :U 1392 ]
 [; ;main.c: 308: }
-[; ;main.c: 311: if (bit0 == 1){
+[e $U 1392  ]
+"309
+[e :U 1391 ]
+[; ;main.c: 309: else{
+{
+[; ;main.c: 310: oneBitOff();
+"310
+[e ( _oneBitOff ..  ]
 "311
+}
+[e :U 1392 ]
+[; ;main.c: 311: }
+[; ;main.c: 314: if (bit0 == 1){
+"314
 [e $ ! == -> _bit0 `i -> 1 `i 1393  ]
 {
-[; ;main.c: 312: oneBitOn();
-"312
-[e ( _oneBitOn ..  ]
-"313
-}
-[; ;main.c: 313: }
-[e $U 1394  ]
-"314
-[e :U 1393 ]
-[; ;main.c: 314: else{
-{
-[; ;main.c: 315: oneBitOff();
+[; ;main.c: 315: lastBitOn();
 "315
-[e ( _oneBitOff ..  ]
+[e ( _lastBitOn ..  ]
 "316
 }
-[e :U 1394 ]
-"318
-}
 [; ;main.c: 316: }
-[; ;main.c: 318: }
-[e $U 1395  ]
-"319
-[e :U 1378 ]
-[; ;main.c: 319: else{
+[e $U 1394  ]
+"317
+[e :U 1393 ]
+[; ;main.c: 317: else{
 {
-[; ;main.c: 321: allBitsOff();
+[; ;main.c: 318: lastBitOff();
+"318
+[e ( _lastBitOff ..  ]
+"319
+}
+[e :U 1394 ]
 "321
-[e ( _allBitsOff ..  ]
+}
+[; ;main.c: 319: }
+[; ;main.c: 321: }
+[e $U 1395  ]
 "322
+[e :U 1378 ]
+[; ;main.c: 322: else{
+{
+[; ;main.c: 324: allBitsOff();
+"324
+[e ( _allBitsOff ..  ]
+"325
 }
 [e :U 1395 ]
-[; ;main.c: 322: }
-[; ;main.c: 323: }
-"323
+[; ;main.c: 325: }
+[; ;main.c: 326: }
+"326
 [e :UE 1341 ]
 }
-"325
+"328
 [v _white `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 325: void white(unsigned char v){
+[; ;main.c: 328: void white(unsigned char v){
 [e :U _white ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 326: brightness(1, 1, 1, v);
-"326
+[; ;main.c: 329: brightness(1, 1, 1, v);
+"329
 [e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 1 `i `uc -> -> 1 `i `uc _v ]
-[; ;main.c: 327: }
-"327
+[; ;main.c: 330: }
+"330
 [e :UE 1396 ]
 }
-"330
+"333
 [v _cyan `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 330: void cyan(unsigned char v){
+[; ;main.c: 333: void cyan(unsigned char v){
 [e :U _cyan ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 331: brightness(1, 0, 1, v);
-"331
-[e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc _v ]
-[; ;main.c: 332: }
-"332
+[; ;main.c: 334: brightness(0, 1, 1, v);
+"334
+[e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 1 `i `uc -> -> 1 `i `uc _v ]
+[; ;main.c: 335: }
+"335
 [e :UE 1397 ]
 }
-"335
+"338
 [v _yellow `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 335: void yellow(unsigned char v){
+[; ;main.c: 338: void yellow(unsigned char v){
 [e :U _yellow ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 336: brightness(1, 1, 0, v);
-"336
+[; ;main.c: 339: brightness(1, 1, 0, v);
+"339
 [e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc _v ]
-[; ;main.c: 337: }
-"337
+[; ;main.c: 340: }
+"340
 [e :UE 1398 ]
 }
-"340
+"343
 [v _magenta `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 340: void magenta(unsigned char v){
+[; ;main.c: 343: void magenta(unsigned char v){
 [e :U _magenta ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 341: brightness(0, 1, 1, v);
-"341
-[e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 1 `i `uc -> -> 1 `i `uc _v ]
-[; ;main.c: 342: }
-"342
+[; ;main.c: 344: brightness(1, 0, 1, v);
+"344
+[e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc _v ]
+[; ;main.c: 345: }
+"345
 [e :UE 1399 ]
 }
-"345
+"348
 [v _green `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 345: void green(unsigned char v){
+[; ;main.c: 348: void green(unsigned char v){
 [e :U _green ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 346: brightness(1, 0, 0, v);
-"346
-[e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc _v ]
-[; ;main.c: 347: }
-"347
+[; ;main.c: 349: brightness(0, 1, 0, v);
+"349
+[e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc _v ]
+[; ;main.c: 350: }
+"350
 [e :UE 1400 ]
 }
-"350
+"353
 [v _blue `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 350: void blue(unsigned char v){
+[; ;main.c: 353: void blue(unsigned char v){
 [e :U _blue ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 351: brightness(0, 0, 1, v);
-"351
+[; ;main.c: 354: brightness(0, 0, 1, v);
+"354
 [e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 1 `i `uc _v ]
-[; ;main.c: 352: }
-"352
+[; ;main.c: 355: }
+"355
 [e :UE 1401 ]
 }
-"355
+"358
 [v _red `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 355: void red(unsigned char v){
+[; ;main.c: 358: void red(unsigned char v){
 [e :U _red ]
 [v _v `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 356: brightness(0, 1, 0, v);
-"356
-[e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc _v ]
-[; ;main.c: 357: }
-"357
+[; ;main.c: 359: brightness(1, 0, 0, v);
+"359
+[e ( _brightness (4 , , , -> -> 1 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc _v ]
+[; ;main.c: 360: }
+"360
 [e :UE 1402 ]
 }
-"360
+"363
 [v _off `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 360: void off(void){
+[; ;main.c: 363: void off(void){
 [e :U _off ]
 [f ]
-[; ;main.c: 361: brightness(0, 0, 0, 0);
-"361
+[; ;main.c: 364: brightness(0, 0, 0, 0);
+"364
 [e ( _brightness (4 , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 362: }
-"362
+[; ;main.c: 365: }
+"365
 [e :UE 1403 ]
 }
-"365
+"368
 [v _allBitsOff `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 365: void allBitsOff(void){
+[; ;main.c: 368: void allBitsOff(void){
 [e :U _allBitsOff ]
 [f ]
-[; ;main.c: 367: for (int i = 0; i < 8; i++){
-"367
+[; ;main.c: 376: if (0 == 1){
+"376
+[e $ ! == -> 0 `i -> 1 `i 1405  ]
 {
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $ < _i -> 8 `i 1405  ]
+[; ;main.c: 377: oneBitOn();
+"377
+[e ( _oneBitOn ..  ]
+"378
+}
+[; ;main.c: 378: }
 [e $U 1406  ]
+"379
 [e :U 1405 ]
+[; ;main.c: 379: else{
 {
-[; ;main.c: 368: PORTCbits.RC0 = 1;
-"368
-[e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 369: _delay((unsigned long)((0.35)*(64000000/4000000.0)));
-"369
-[e ( __delay (1 -> * .0.35 / -> -> 64000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 370: PORTCbits.RC0 = 0;
-"370
-[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 371: _delay((unsigned long)((0.9)*(64000000/4000000.0)));
-"371
-[e ( __delay (1 -> * .0.9 / -> -> 64000000 `l `d .4000000.0 `ul ]
-"372
+[; ;main.c: 380: oneBitOff();
+"380
+[e ( _oneBitOff ..  ]
+"381
 }
-"367
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 8 `i 1405  ]
 [e :U 1406 ]
-"372
+[; ;main.c: 381: }
+[; ;main.c: 384: if (0 == 1){
+"384
+[e $ ! == -> 0 `i -> 1 `i 1407  ]
+{
+[; ;main.c: 385: oneBitOn();
+"385
+[e ( _oneBitOn ..  ]
+"386
 }
-[; ;main.c: 372: }
-[; ;main.c: 373: }
-"373
+[; ;main.c: 386: }
+[e $U 1408  ]
+"387
+[e :U 1407 ]
+[; ;main.c: 387: else{
+{
+[; ;main.c: 388: oneBitOff();
+"388
+[e ( _oneBitOff ..  ]
+"389
+}
+[e :U 1408 ]
+[; ;main.c: 389: }
+[; ;main.c: 392: if (0 == 1){
+"392
+[e $ ! == -> 0 `i -> 1 `i 1409  ]
+{
+[; ;main.c: 393: oneBitOn();
+"393
+[e ( _oneBitOn ..  ]
+"394
+}
+[; ;main.c: 394: }
+[e $U 1410  ]
+"395
+[e :U 1409 ]
+[; ;main.c: 395: else{
+{
+[; ;main.c: 396: oneBitOff();
+"396
+[e ( _oneBitOff ..  ]
+"397
+}
+[e :U 1410 ]
+[; ;main.c: 397: }
+[; ;main.c: 400: if (0 == 1){
+"400
+[e $ ! == -> 0 `i -> 1 `i 1411  ]
+{
+[; ;main.c: 401: oneBitOn();
+"401
+[e ( _oneBitOn ..  ]
+"402
+}
+[; ;main.c: 402: }
+[e $U 1412  ]
+"403
+[e :U 1411 ]
+[; ;main.c: 403: else{
+{
+[; ;main.c: 404: oneBitOff();
+"404
+[e ( _oneBitOff ..  ]
+"405
+}
+[e :U 1412 ]
+[; ;main.c: 405: }
+[; ;main.c: 408: if (0 == 1){
+"408
+[e $ ! == -> 0 `i -> 1 `i 1413  ]
+{
+[; ;main.c: 409: oneBitOn();
+"409
+[e ( _oneBitOn ..  ]
+"410
+}
+[; ;main.c: 410: }
+[e $U 1414  ]
+"411
+[e :U 1413 ]
+[; ;main.c: 411: else{
+{
+[; ;main.c: 412: oneBitOff();
+"412
+[e ( _oneBitOff ..  ]
+"413
+}
+[e :U 1414 ]
+[; ;main.c: 413: }
+[; ;main.c: 416: if (0 == 1){
+"416
+[e $ ! == -> 0 `i -> 1 `i 1415  ]
+{
+[; ;main.c: 417: oneBitOn();
+"417
+[e ( _oneBitOn ..  ]
+"418
+}
+[; ;main.c: 418: }
+[e $U 1416  ]
+"419
+[e :U 1415 ]
+[; ;main.c: 419: else{
+{
+[; ;main.c: 420: oneBitOff();
+"420
+[e ( _oneBitOff ..  ]
+"421
+}
+[e :U 1416 ]
+[; ;main.c: 421: }
+[; ;main.c: 424: if (0 == 1){
+"424
+[e $ ! == -> 0 `i -> 1 `i 1417  ]
+{
+[; ;main.c: 425: oneBitOn();
+"425
+[e ( _oneBitOn ..  ]
+"426
+}
+[; ;main.c: 426: }
+[e $U 1418  ]
+"427
+[e :U 1417 ]
+[; ;main.c: 427: else{
+{
+[; ;main.c: 428: oneBitOff();
+"428
+[e ( _oneBitOff ..  ]
+"429
+}
+[e :U 1418 ]
+[; ;main.c: 429: }
+[; ;main.c: 432: if (0 == 1){
+"432
+[e $ ! == -> 0 `i -> 1 `i 1419  ]
+{
+[; ;main.c: 433: oneBitOn();
+"433
+[e ( _oneBitOn ..  ]
+"434
+}
+[; ;main.c: 434: }
+[e $U 1420  ]
+"435
+[e :U 1419 ]
+[; ;main.c: 435: else{
+{
+[; ;main.c: 436: oneBitOff();
+"436
+[e ( _oneBitOff ..  ]
+"437
+}
+[e :U 1420 ]
+[; ;main.c: 437: }
+[; ;main.c: 438: }
+"438
 [e :UE 1404 ]
 }
-"376
+"441
 [v _oneBitOn `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 376: void oneBitOn(void){
+[; ;main.c: 441: void oneBitOn(void){
 [e :U _oneBitOn ]
 [f ]
-[; ;main.c: 378: PORTCbits.RC0 = 1;
-"378
+[; ;main.c: 443: PORTCbits.RC0 = 1;
+"443
 [e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 379: _delay((unsigned long)((0.9)*(64000000/4000000.0)));
-"379
-[e ( __delay (1 -> * .0.9 / -> -> 64000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 380: PORTCbits.RC0 = 0;
-"380
+[; ;main.c: 444: _delay((unsigned long)((.7)*(64000000/4000000.0)));
+"444
+[e ( __delay (1 -> * .0.7 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 445: PORTCbits.RC0 = 0;
+"445
 [e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 381: _delay((unsigned long)((0.35)*(64000000/4000000.0)));
-"381
-[e ( __delay (1 -> * .0.35 / -> -> 64000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 382: }
-"382
-[e :UE 1408 ]
+[; ;main.c: 446: _delay((unsigned long)((0.6)*(64000000/4000000.0)));
+"446
+[e ( __delay (1 -> * .0.6 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 447: }
+"447
+[e :UE 1421 ]
 }
-"385
+"450
 [v _oneBitOff `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 385: void oneBitOff(void){
+[; ;main.c: 450: void oneBitOff(void){
 [e :U _oneBitOff ]
 [f ]
-[; ;main.c: 387: PORTCbits.RC0 = 1;
-"387
+[; ;main.c: 452: PORTCbits.RC0 = 1;
+"452
 [e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 388: _delay((unsigned long)((0.35)*(64000000/4000000.0)));
-"388
+[; ;main.c: 453: _delay((unsigned long)((0.35)*(64000000/4000000.0)));
+"453
 [e ( __delay (1 -> * .0.35 / -> -> 64000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 389: PORTCbits.RC0 = 0;
-"389
+[; ;main.c: 454: PORTCbits.RC0 = 0;
+"454
 [e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 390: _delay((unsigned long)((0.9)*(64000000/4000000.0)));
-"390
-[e ( __delay (1 -> * .0.9 / -> -> 64000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 391: }
-"391
-[e :UE 1409 ]
+[; ;main.c: 455: _delay((unsigned long)((0.6)*(64000000/4000000.0)));
+"455
+[e ( __delay (1 -> * .0.6 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 456: }
+"456
+[e :UE 1422 ]
+}
+"459
+[v _lastBitOn `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 459: void lastBitOn(void){
+[e :U _lastBitOn ]
+[f ]
+[; ;main.c: 461: PORTCbits.RC0 = 1;
+"461
+[e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 462: _delay((unsigned long)((0.7)*(64000000/4000000.0)));
+"462
+[e ( __delay (1 -> * .0.7 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 463: PORTCbits.RC0 = 0;
+"463
+[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 464: _delay((unsigned long)((0.3)*(64000000/4000000.0)));
+"464
+[e ( __delay (1 -> * .0.3 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 465: }
+"465
+[e :UE 1423 ]
+}
+"468
+[v _lastBitOff `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 468: void lastBitOff(void){
+[e :U _lastBitOff ]
+[f ]
+[; ;main.c: 470: PORTCbits.RC0 = 1;
+"470
+[e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 471: _delay((unsigned long)((0.35)*(64000000/4000000.0)));
+"471
+[e ( __delay (1 -> * .0.35 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 472: PORTCbits.RC0 = 0;
+"472
+[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 473: _delay((unsigned long)((0.3)*(64000000/4000000.0)));
+"473
+[e ( __delay (1 -> * .0.3 / -> -> 64000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 474: }
+"474
+[e :UE 1424 ]
 }

@@ -19,6 +19,8 @@ void white(unsigned char v);
 void off(void);
 void oneBitOn(void);
 void oneBitOff(void);
+void lastBitOn(void);
+void lastBitOff(void);
 void allBitsOff(void);
 void brightness(unsigned char grn, unsigned char red, unsigned char blu, unsigned char value );
 /*
@@ -60,12 +62,13 @@ void main(void)
     unsigned char value = 0;
     unsigned char lastValue = 0;
     
+    color = 0;
     while (1)
     {
         ADC_value = ADCC_GetSingleConversion(ADPCH0);
         value = ( ADC_value >> 2 );
-        
-        for( unsigned char j = 0; j < 60; j++ ){
+
+        for( unsigned char j = 0; j < 25; j++ ){
             if (color < 1){
                 off();
             }
@@ -92,23 +95,23 @@ void main(void)
             }
         }
         
-        __delay_ms(250); 
+        __delay_us(10); 
     }
 }
 
-void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsigned char value ){
-    unsigned char bit7 = value & 128;
-    unsigned char bit6 = value & 64;
-    unsigned char bit5 = value & 32;
-    unsigned char bit4 = value & 16;
-    unsigned char bit3 = value & 8;
-    unsigned char bit2 = value & 4;
-    unsigned char bit1 = value & 2;
-    unsigned char bit0 = value & 1;
+void brightness( unsigned char red, unsigned char grn, unsigned char blu, unsigned char value ){
+    unsigned char bit7 = 0;//(value >> 7) & 1;
+    unsigned char bit6 = 1;//(value >> 6) & 1;
+    unsigned char bit5 = 1;//(value >> 5) & 1;
+    unsigned char bit4 = 1;//(value >> 4) & 1;
+    unsigned char bit3 = 1;//(value >> 3) & 1;
+    unsigned char bit2 = 1;//(value >> 2) & 1;
+    unsigned char bit1 = 1;//(value >> 1) & 1;
+    unsigned char bit0 = 1;//(value) & 1;
     
-    if (grn){
+    if (red){
         
-        if (bit7 == 128){
+        if (bit7 == 1){
             oneBitOn();
         }
         else{
@@ -116,7 +119,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit6 == 64){
+        if (bit6 == 1){
             oneBitOn();
         }
         else{
@@ -124,7 +127,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit5 == 32){
+        if (bit5 == 1){
             oneBitOn();
         }
         else{
@@ -132,15 +135,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit4 == 16){
-            oneBitOn();
-        }
-        else{
-            oneBitOff();
-        }
-
-        
-        if (bit3 == 8){
+        if (bit4 == 1){
             oneBitOn();
         }
         else{
@@ -148,7 +143,15 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
 
         
-        if (bit2 == 4){
+        if (bit3 == 1){
+            oneBitOn();
+        }
+        else{
+            oneBitOff();
+        }
+
+        
+        if (bit2 == 1){
             oneBitOn();
         }
         else{
@@ -156,7 +159,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
  
         
-        if (bit1 == 2){
+        if (bit1 == 1){
             oneBitOn();
         }
         else{
@@ -178,9 +181,9 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
     }
     
     
-    if (red){
+    if (grn){
         
-        if (bit7 == 128){
+        if (bit7 == 1){
             oneBitOn();
         }
         else{
@@ -188,7 +191,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit6 == 64){
+        if (bit6 == 1){
             oneBitOn();
         }
         else{
@@ -196,7 +199,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit5 == 32){
+        if (bit5 == 1){
             oneBitOn();
         }
         else{
@@ -204,15 +207,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit4 == 16){
-            oneBitOn();
-        }
-        else{
-            oneBitOff();
-        }
-
-        
-        if (bit3 == 8){
+        if (bit4 == 1){
             oneBitOn();
         }
         else{
@@ -220,7 +215,15 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
 
         
-        if (bit2 == 4){
+        if (bit3 == 1){
+            oneBitOn();
+        }
+        else{
+            oneBitOff();
+        }
+
+        
+        if (bit2 == 1){
             oneBitOn();
         }
         else{
@@ -228,7 +231,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
  
         
-        if (bit1 == 2){
+        if (bit1 == 1){
             oneBitOn();
         }
         else{
@@ -252,7 +255,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
     
     if (blu){
         
-        if (bit7 == 128){
+        if (bit7 == 1){
             oneBitOn();
         }
         else{
@@ -260,7 +263,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit6 == 64){
+        if (bit6 == 1){
             oneBitOn();
         }
         else{
@@ -268,7 +271,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit5 == 32){
+        if (bit5 == 1){
             oneBitOn();
         }
         else{
@@ -276,15 +279,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
         
         
-        if (bit4 == 16){
-            oneBitOn();
-        }
-        else{
-            oneBitOff();
-        }
-
-        
-        if (bit3 == 8){
+        if (bit4 == 1){
             oneBitOn();
         }
         else{
@@ -292,7 +287,15 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
 
         
-        if (bit2 == 4){
+        if (bit3 == 1){
+            oneBitOn();
+        }
+        else{
+            oneBitOff();
+        }
+
+        
+        if (bit2 == 1){
             oneBitOn();
         }
         else{
@@ -300,7 +303,7 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
         }
  
         
-        if (bit1 == 2){
+        if (bit1 == 1){
             oneBitOn();
         }
         else{
@@ -309,10 +312,10 @@ void brightness( unsigned char grn, unsigned char red, unsigned char blu, unsign
 
         
         if (bit0 == 1){
-            oneBitOn();
+            lastBitOn();
         }
         else{
-            oneBitOff();
+            lastBitOff();
         }
         
     }
@@ -328,7 +331,7 @@ void white(unsigned char v){
 
 
 void cyan(unsigned char v){
-    brightness(1, 0, 1, v);
+    brightness(0, 1, 1, v);
 }
 
 
@@ -338,12 +341,12 @@ void yellow(unsigned char v){
 
 
 void magenta(unsigned char v){          
-    brightness(0, 1, 1, v);
+    brightness(1, 0, 1, v);
 }
 
 
 void green(unsigned char v){      
-    brightness(1, 0, 0, v);
+    brightness(0, 1, 0, v);
 }
 
 
@@ -353,7 +356,7 @@ void blue(unsigned char v){
 
 
 void red(unsigned char v){
-    brightness(0, 1, 0, v);
+    brightness(1, 0, 0, v);
 }
 
 
@@ -364,11 +367,73 @@ void off(void){
 
 void allBitsOff(void){
 
-    for (int i = 0; i < 8; i++){
+    /*for (int i = 0; i < 8; i++){
         PORTCbits.RC0 = 1;
-        __delay_us(0.35);
+        __delay_us(0.15);
         PORTCbits.RC0 = 0;
-        __delay_us(0.9);
+        __delay_us(0.6);
+    }*/
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
+    }
+
+
+    if (0 == 1){
+        oneBitOn();
+    }
+    else{
+        oneBitOff();
     }
 }
 
@@ -376,9 +441,9 @@ void allBitsOff(void){
 void oneBitOn(void){
     
         PORTCbits.RC0 = 1;
-        __delay_us(0.9);
+        __delay_us(.7);
         PORTCbits.RC0 = 0;
-        __delay_us(0.35); 
+        __delay_us(0.6); 
 }
 
 
@@ -387,7 +452,25 @@ void oneBitOff(void){
         PORTCbits.RC0 = 1;
         __delay_us(0.35);
         PORTCbits.RC0 = 0;
-        __delay_us(0.9); 
+        __delay_us(0.6); 
+}
+
+
+void lastBitOn(void){
+    
+        PORTCbits.RC0 = 1;
+        __delay_us(0.7);
+        PORTCbits.RC0 = 0;
+        __delay_us(0.3);
+}
+
+
+void lastBitOff(void){
+    
+        PORTCbits.RC0 = 1;
+        __delay_us(0.35);
+        PORTCbits.RC0 = 0;
+        __delay_us(0.3);
 }
 /**
  End of File
